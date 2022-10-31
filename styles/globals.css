@@ -627,7 +627,7 @@ padding: 6px;
   margin-top: 10px;
 }
 
-@media screen and (max-width:800px) {
+@media screen and (max-width:750px) {
   .hero-banner-container{
     height: 560px;
   }
