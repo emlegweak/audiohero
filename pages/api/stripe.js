@@ -1,6 +1,6 @@
 import Stripe from 'stripe';
 
-const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY}`);
+const stripe = new Stripe(String(process.env.STRIPE_SECRET_KEY));
 
 //copy/paste from stripe docs for next.js integration
 export default async function handler(req, res) {
@@ -31,7 +31,7 @@ export default async function handler(req, res) {
                 name: item.name,
                 images: [newImage],
               },
-              unit_amount: item.price * 100,
+              unit_amount: Math.round(item.price * 100),
             },
             adjustable_quantity: {
               enabled:true,
