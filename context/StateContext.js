@@ -40,18 +40,18 @@ export const StateContext = ({children}) =>{
 
     //toggle cart item quantity
     const toggleCartItemQuantity = (id, value) => {
-        foundProduct = cartItems.find((item) => item._id === product._id)
+        foundProduct = cartItems.find((item) => item._id === id)
         index = cartItems.findIndex((product) => product._id === id)
+        //updates cart contents without mutating the state
+         const newCartItems = cartItems.filter((item) => item._id !== id)
         
-        if(val === 'inc'){
-            foundProduct.quantity += 1
-            setCartItems([...cartItems, {...foundProduct, quantity: foundProduct.quantity + 1}])
+        if(value === 'inc'){  
+            setCartItems([...newCartItems.slice(0, index), {...foundProduct, quantity: foundProduct.quantity + 1}, ...newCartItems.slice(index)])
             setTotalPrice((prevTotalPrice) => prevTotalPrice + foundProduct.price)
             setTotalQuantities(prevTotalQuantities => prevTotalQuantities + 1)
-        }else if (val === 'dec'){
+        }else if (value === 'dec'){
             if (foundProduct.quantity > 1){
-            foundProduct.quantity += 1
-            setCartItems( [...cartItems, {...foundProduct, quantity: foundProduct.quantity - 1}])
+            setCartItems( [...newCartItems.slice(0, index), {...foundProduct, quantity: foundProduct.quantity - 1}, ...newCartItems.slice(index)])
             setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price)
             setTotalQuantities(prevTotalQuantities => prevTotalQuantities - 1)
             }
